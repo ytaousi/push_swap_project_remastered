@@ -33,13 +33,13 @@ OBJECTS_BONUS = $(SRCS_BONUS:.c=.o)
 all : $(NAME) 
 
 $(NAME) : $(OBJECTS)
-	ar -rc $(NAME) $(OBJECTS) && ranlib $(NAME)
+	@ar -rc $(NAME) $(OBJECTS) && ranlib $(NAME)
 $(OBJECTS) :
-	gcc $(CFLAGS) -c $(SRCS)
+	@gcc $(CFLAGS) -c $(SRCS)
 bonus : $(OBJECTS_BONUS)
-	ar -rc $(NAME) $(OBJECTS_BONUS) && ranlib $(NAME)
+	@ar -rc $(NAME) $(OBJECTS_BONUS) && ranlib $(NAME)
 $(OBJECTS_BONUS) :
-	gcc $(CFLAGS) -c $(SRCS_BONUS)
+	@gcc $(CFLAGS) -c $(SRCS_BONUS)
 clean :
 	rm -f $(OBJECTS) $(OBJECTS_BONUS)
 fclean : clean
