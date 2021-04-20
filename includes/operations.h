@@ -1,6 +1,6 @@
 #ifndef _OPERATIONS_H
 # define _OPERATIONS_H
-#include "./libft/libft.h"
+#include "../libft/libft.h"
 
 typedef struct      s_stack
 {

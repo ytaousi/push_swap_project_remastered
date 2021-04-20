@@ -1,9 +1,9 @@
-NAME = checker
+NAME = Checker
 #NAME2 = push_swap
 
 libft = ./libft/libft.a
 
-SRCS = checker.c operations.c utils.c $(libft)
+SRCS = ./checker/checker.c ./utils/operations.c ./utils/utils.c $(libft)
 #SRCS2 = push_swap.c operations.c utils.c $(libft)
 
 OBJECTS = $(SRCS:.c=.o)

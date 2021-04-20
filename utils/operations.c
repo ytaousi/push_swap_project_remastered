@@ -1,4 +1,4 @@
-#include "operations.h"
+#include "../includes/operations.h"
 
 int    ft_sa(t_stack **astack, t_stack **bstack)
 {
