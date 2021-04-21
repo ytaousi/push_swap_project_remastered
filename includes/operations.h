@@ -15,6 +15,9 @@ typedef struct          s_operations
     struct s_operations *next;
 }                       t_operations;
 
+t_stack                 *ft_new_stack(int nelements, char **av);
+int                     ft_tablen(char **pointer_tab);
+///////////////////////////////////////////// Remastered code above ///////////////////////
 int                     ft_isint(char *av);
 t_stack                 *ft_new_number(int number);
 t_operations	        *ft_new_operation(char *operation);

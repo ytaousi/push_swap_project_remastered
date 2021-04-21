@@ -1,5 +1,27 @@
 #include "../includes/operations.h"
 
+
+
+t_stack *ft_new_stack(int nelements, char **av)
+{
+	t_stack *astack;
+	int  i;
+
+	astack = NULL;
+	if (nelements != 0)
+	{
+		i = 1;
+		while (av[i] != NULL)
+    	{
+        	ft_lstadd_back_number(&astack, ft_new_number(ft_atoi(av[i])));
+        	i++;
+    	}
+	}
+	return (astack);
+}
+		
+// }
+////////////////////////////////////// Remastered Code above ///////////////////////
 int ft_isint(char *av)
 {
     int i;
@@ -107,4 +129,17 @@ int		ft_is_equal_str(char *s1, char *s2)
 		return (1);
 	else
 		return (0);
+}
+
+int ft_tablen(char **pointer_tab)
+{
+    int i;
+
+    i = 0;
+    if (pointer_tab)
+    {
+        while (pointer_tab[i] != NULL)
+            i++;
+    }
+    return (i);
 }
