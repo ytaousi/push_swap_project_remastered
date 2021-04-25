@@ -1,212 +1,177 @@
 #include "../includes/operations.h"
 
-int    ft_sa(t_stack **astack, t_stack **bstack)
+int     ft_push(t_stack **stack, int number)
 {
-    t_stack *tmp;
+    t_stack *new;
 
-    if (bstack)
-    {
-        ;
-    }
-    if (ft_get_len_env(*astack) < 2)
-        return (0);
-    else
-    {
-        tmp = (*astack)->next;
-        (*astack)->next = tmp->next;
-        tmp->next = *astack;
-        *astack = tmp;
-        return (1);
-    }
-}
-
-int    ft_sb(t_stack **bstack, t_stack **astack)
-{
-    t_stack *tmp;
-
-    if (astack)
-    {
-        ;
-    }
-    if (ft_get_len_env(*bstack) < 2)
-        return (0);
-    else
-    {
-        tmp = (*bstack)->next;
-        (*bstack)->next = tmp->next;
-        tmp->next = *bstack;
-        *bstack = tmp;
-        return (1);
-    }
-}
-
-int        ft_ss(t_stack **astack, t_stack **bstack)
-{
-    ft_sa(astack, bstack);
-    ft_sb(bstack, astack);
+    new = malloc(sizeof(t_stack));
+    if (!new)
+        return -1;
+    new->number = number;
+    new->next = *stack;
+    *stack = new;
     return (1);
 }
 
-int         ft_pa(t_stack **astack, t_stack **bstack)
+int    ft_pop(t_stack **stack)
 {
-    if (ft_get_len_env(*bstack) == 0)
-        return (0);
-    else
+    int number;
+    t_stack *tmp;
+    if (*stack == NULL)
+        return ;
+    tmp = *stack;
+    number = tmp->number;
+    *stack = tmp->next;
+    free(tmp);
+    return (number);
+}
+
+void    ft_sa(t_stack **astack)
+{
+    int tmp;
+    int tmp2;
+    
+    if (ft_get_len_stack(*astack) > 1)
     {
-        if (astack || bstack)
-        {
-            ;
-        }
-        return (1);
+        tmp = ft_pop(astack);
+        tmp2 = ft_pop(astack);
+        ft_push(astack, tmp);
+        ft_push(astack, tmp2);
     }
 }
 
-int         ft_pb(t_stack **bstack, t_stack **astack)
+void    ft_sb(t_stack **bstack)
 {
-    if (ft_get_len_env(*astack) == 0)
-        return (0);
-    else
+    int tmp;
+    int tmp2;
+    
+    if (ft_get_len_stack(*bstack) > 1)
     {
-        if (astack || bstack)
-        {
-            ;
-        }
-        return (1);
+        tmp = ft_pop(bstack);
+        tmp2 = ft_pop(bstack);
+        ft_push(bstack, tmp);
+        ft_push(bstack, tmp2);
     }
 }
 
-int        ft_ra(t_stack **astack, t_stack **bstack)
+void        ft_ss(t_stack **astack, t_stack **bstack)
+{
+    ft_sa(astack);
+    ft_sb(bstack);
+}
+
+void         ft_pa(t_stack **astack, t_stack **bstack)
+{
+     int tmp;
+
+    if (*bstack)
+    {
+        tmp = ft_pop(bstack);
+        ft_push(astack, tmp);
+    }
+}
+
+void         ft_pb(t_stack **bstack, t_stack **astack)
+{
+    int tmp;
+
+    if (*astack)
+    {
+        tmp = ft_pop(astack);
+        ft_push(bstack, tmp);
+    }
+}
+
+void        ft_ra(t_stack **astack)
 {
     t_stack *tmp;
     t_stack *tmp2;
-    int     rotatea;
-
-    if (bstack)
-    {
-        ;
-    }
-    if(ft_get_len_env(*astack) < 2)
-        return (0);
-    else
-    {
-        rotatea = (*astack)->number;
-        tmp = *astack;
-        tmp2 = *astack;
-        tmp = tmp->next;
-        while (tmp != NULL)
-        {
-            tmp2->number = tmp->number;
-            tmp = tmp->next;
-            tmp2 = tmp2->next;
-        }
-        tmp2->number = rotatea;
-        return (1);
-    }
-}
-
-int        ft_rb(t_stack **bstack, t_stack **astack)
-{
-    t_stack *tmp;
-    t_stack *tmp2;
-    int     rotateb;
-
-    if (astack)
-    {
-        ;
-    }
-    if(ft_get_len_env(*bstack) < 2)
-        return (0);
-    else
-    {
-        rotateb = (*bstack)->number;
-        tmp = *bstack;
-        tmp2 = *bstack;
-        tmp = tmp->next;
-        while (tmp != NULL)
-        {
-            tmp2->number = tmp->number;
-            tmp = tmp->next;
-            tmp2 = tmp2->next;
-        }
-        tmp2->number = rotateb;
-        return (1);
-    }
-}
-
-int        ft_rr(t_stack **astack, t_stack **bstack)
-{
-    ft_ra(astack, bstack);
-    ft_rb(bstack, astack);
-    return (1);
-}
-
-int         ft_rra(t_stack **astack, t_stack **bstack)
-{
-    t_stack *tmp;
-    t_stack *tmp2;
-    int     i;
-
-    if (bstack)
-    {
-        ;
-    }
-    i = 0;
-    if(ft_get_len_env(*astack) < 2)
-        return (0);
-    else
+    
+    if (ft_get_len_stack(*astack) > 1)
     {
         tmp = *astack;
-        tmp2 = *astack;
-        while (tmp2->next != NULL)
-            tmp2 = tmp2->next;
-        while (i < ft_get_len_env(*astack) - 2)
+        while (tmp->next)
         {
+            tmp2 = tmp;
             tmp = tmp->next;
-            i++;
         }
-        tmp->next = NULL;
-        tmp2->next = *astack;
-        *astack = tmp2;
-        return (1);
+        tmp2->next = NULL;
+        ft_push(astack, tmp->number);
+        free(tmp);
     }
 }
 
-int         ft_rrb(t_stack **bstack, t_stack **astack)
+void        ft_rb(t_stack **bstack)
 {
     t_stack *tmp;
     t_stack *tmp2;
-    int     i;
-
-    if (astack)
-    {
-        ;
-    }
-    i = 0;
-    if(ft_get_len_env(*bstack) < 2)
-        return (0);
-    else
+    
+    if (ft_get_len_stack(*bstack) > 1)
     {
         tmp = *bstack;
-        tmp2 = *bstack;
-        while (tmp2->next != NULL)
-            tmp2 = tmp2->next;
-        while (i < ft_get_len_env(*bstack) - 2)
+        while (tmp->next)
         {
+            tmp2 = tmp;
             tmp = tmp->next;
-            i++;
         }
-        tmp->next = NULL;
-        tmp2->next = *bstack;
-        *bstack = tmp2;
-        return (1);
+        tmp2->next = NULL;
+        ft_push(bstack, tmp->number);
+        free(tmp);
     }
 }
 
-int        ft_rrr(t_stack **astack, t_stack **bstack)
+void        ft_rr(t_stack **astack, t_stack **bstack)
 {
-    ft_rra(astack, bstack);
-    ft_rrb(bstack, astack);
-    return (1);
+    ft_ra(astack);
+    ft_rb(bstack);
+}
+
+void         ft_rra(t_stack **astack)
+{
+    t_stack *tmp;
+    t_stack *tmp2;
+
+    tmp = malloc(sizeof(t_stack));
+    tmp->number = ft_pop(astack);
+    tmp->next = NULL;
+
+    tmp2 = *astack;
+    while (tmp2)
+    {
+        if (!tmp2->next)
+        {
+            tmp2->next = tmp;
+            break ;
+        }
+        tmp2 = tmp2->next;
+    }
+}
+
+void         ft_rrb(t_stack **bstack)
+{
+    t_stack *tmp;
+    t_stack *tmp2;
+
+    tmp = malloc(sizeof(t_stack));
+    tmp->number = ft_pop(bstack);
+    tmp->next = NULL;
+
+    tmp2 = *bstack;
+    while (tmp2)
+    {
+        if (!tmp2->next)
+        {
+            tmp2->next = tmp;
+            break ;
+        }
+        tmp2 = tmp2->next;
+    }
+}
+
+void        ft_rrr(t_stack **astack, t_stack **bstack)
+{
+    ft_rra(astack);
+    ft_rrb(bstack);
 }
 
 int         ft_stack_is_sorted(t_stack *head)
@@ -223,60 +188,131 @@ int         ft_stack_is_sorted(t_stack *head)
             return (0);
         tmp = tmp->next;
     }
-
     return (1);
 }
 
-int        ft_operations_normed(t_operations **operation_in , char **tab)
+int        ft_operation_found(char *operation)
 {
-    int found;
+    char **operations;
     int i;
+    int found;
 
-    while (*operation_in)
+    i = 0;
+    found = 0;
+    operations = ft_split("sa;sb;ss;pa;pb;ra;rb;rr;rra;rrb;rrr", ';');
+    while (operations[i])
     {
-        found = 0;
-        i = 0;
-        while (tab[i])
+        if (ft_is_equal_str(operations[i], operation))
         {
-            if (ft_is_equal_str((*operation_in)->operation, tab[i]))
-            {   
-                (*operation_in)->index = i;
-                found = 1;
-                break;
-            }
-            else
-                i++;
+            found = 1;
+            ft_strfree(operations);
+            break;
         }
-        if (found == 0)
+        i++;
+    }
+    if (found == 1)
+    {
+        ft_strfree(operations);
+        return (1);
+    }
+    else
+    {
+        ft_strfree(operations);
+        return (0);
+    }
+}
+
+void        ft_apply_operation(char *operation, t_stack **astack, t_stack **bstack)
+{
+    if (*astack || *bstack)
+    {
+        ;
+    }
+    if (ft_is_equal_str(operation, "sa"))
+    {
+        printf("sa\n");
+		//ft_sa(astack);
+        //swap_first2(a);
+    }
+    if (ft_is_equal_str(operation, "sb"))
+	{
+    	printf("sb\n");
+        //ft_sb(bstack);
+        //swap_first2(b);
+    }
+    if (ft_is_equal_str(operation, "ss"))
+	{
+    	printf("ss\n");
+        //ft_ss(astack, bstack);
+        //swap_a_and_b(a, b);
+    }
+    if (ft_is_equal_str(operation, "pa"))
+	{
+    	printf("pa\n");
+        //ft_pa(astack);
+        //from_a2b(b, a);
+    }
+    if (ft_is_equal_str(operation, "pb"))
+	{
+    	printf("pb\n");
+        //ft_pb(bstack);
+        //from_a2b(a, b);
+    }
+    if (ft_is_equal_str(operation, "ra"))
+	{
+    	printf("ra\n");
+        //ft_ra(astack);
+        //rotate_stack_up(a);
+    }
+    if (ft_is_equal_str(operation, "rb"))
+	{
+    	printf("rb\n");
+        //ft_rb(bstack);
+        //rotate_stack_up(b);
+    }
+    if (ft_is_equal_str(operation, "rr"))
+	{
+    	printf("rr\n");
+        //ft_rr(astack, bstack);
+        //rotate_up_ab(a, b);
+    }
+    if (ft_is_equal_str(operation, "rra"))
+	{
+    	printf("rra\n");
+        //ft_rra(astack);
+        //rotate_stack_down(a);
+    }
+    if (ft_is_equal_str(operation, "rrb"))
+	{
+    	printf("rrb\n");
+        //ft_rrb(bstack);
+        //rotate_stack_down(b);
+    }
+    if (ft_is_equal_str(operation, "rrr"))
+	{
+    	printf("rrr\n");
+        //ft_rrr(astack, bstack);
+        //rotate_down_ab(a, b);
+    }
+}
+
+int        ft_operations_normed(t_stack **astack, t_stack **bstack)
+{
+    char *line;
+
+    while (get_next_line(0, &line) > 0)
+    {
+        if (!ft_operation_found(line))
         {
+            free(line);
             ft_putendl_fd("Error", 1);
             return (0);
         }
         else
-            (*operation_in) = (*operation_in)->next;
+        {
+            ft_apply_operation(line, astack, bstack);
+            free(line);
+        }
     }
-    return (1);
-}
-
-void        ft_apply_operations(t_operations *operation_in, t_stack **astack, t_stack **bstack)
-{
-    int        (*g_builtins_operations[11])(t_stack **, t_stack **);
-
-    g_builtins_operations[0] = &ft_sa;
-    g_builtins_operations[1] = &ft_sb;
-    g_builtins_operations[2] = &ft_ss;
-    g_builtins_operations[3] = &ft_pa;
-    g_builtins_operations[4] = &ft_pb;
-    g_builtins_operations[5] = &ft_ra;
-    g_builtins_operations[6] = &ft_rb;
-    g_builtins_operations[7] = &ft_rr;
-    g_builtins_operations[8] = &ft_rra;
-    g_builtins_operations[9] = &ft_rrb;
-    g_builtins_operations[10] = &ft_rrr;
-
-    while (operation_in)
-    {
-        g_builtins_operations[operation_in->index](astack, bstack);
-        operation_in = operation_in->next;
-    }
+    return(1);
 }

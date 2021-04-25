@@ -11,7 +11,7 @@ OBJECTS = $(SRCS:.c=.o)
 all : $(NAME) $(NAME2)
 
 $(NAME) : $(libft) $(SRCS)
-	gcc -Wall -Werror -Wextra $(SRCS) -o $(NAME)
+	gcc -Wall -Werror -Wextra -g $(SRCS) -o $(NAME)
 
 #$(NAME2) : $(libft) $(SRCS2)
 #	@gcc -Wall -Werror -Wextra $(SRCS2) -o $(NAME2)

@@ -1,82 +1,53 @@
 #include "../includes/operations.h"
 
-int         main(int ac, char **av)
+int        ft_check_numbers(char **av)
 {
-    char **tab;
     int i;
 
-    tab = ft_split("sa|sb|ss|pa|pb|ra|rb|rr|rra|rrb|rrr", '|');
+    i = 1;
+    while(av[i] != NULL)
+    {
+        if (!ft_isint(av[i]) || ft_isduplicate(av, av[i]))
+        {
+            ft_putendl_fd("Error", 1);
+            return (0);
+        }
+        i++;
+    }
+    return (1);
+}
+
+void        ft_print_stack(t_stack *stack)
+{
+    while (stack)
+    {
+        ft_putnbr_fd(stack->number, 1);
+        write(1, "\n", 1);
+        stack = stack->next;
+    }
+}
+
+int         main(int ac, char **av)
+{
+    t_stack *astack;
+    t_stack *bstack;
+
+    astack = NULL;
+    bstack = NULL;
     if (ac > 1)
     {
-        i = 1;
-        while (av[i] != NULL)
-        {
-            if (!ft_isint(av[i]))
-            {
-                ft_putendl_fd("Error", 1);
-                return (0);
-            }
-            i++;
-        }
-        i = 1;
-        t_stack *head;
-        t_stack *tmp;
-        t_stack *head2;
-        t_stack *tmp3;
-        t_operations *tmp2;
-        t_operations *operation_in;
-
-        head = (t_stack *)malloc(sizeof(t_stack));
-        head->number = ft_atoi(av[1]);
-        head->next = NULL;
-        head2 = (t_stack *)malloc(sizeof(t_stack));
-        head2->number = 1;
-        head2->next = NULL;
-        i++;
-
-        // take valid input number and get them into linked list (our main stack)
-
-        while (av[i] != NULL)
-        {
-            ft_lstadd_back_number(&head, ft_new_number(ft_atoi(av[i])));
-             ft_lstadd_back_number(&head2, ft_new_number(i));
-            i++;
-        }
-        tmp = head;
-        tmp3 = head2;
-        while (tmp != NULL && tmp3 != NULL)
-        {
-            printf("[%d]--[%d]\n", tmp->number, tmp3->number);
-            tmp = tmp->next;
-            tmp3 = tmp3->next;
-        }
-
-        // get Operations as char* from stdin
-
-        char *line;
-        while (get_next_line(0, &line) > 0)
-        {
-            ft_lstadd_back_operation(&operation_in, ft_new_operation(line));
-            free(line);
-        }
-        ft_lstadd_back_operation(&operation_in, ft_new_operation(line));
-        free(line);
-        printf("\n");
-        tmp2 = operation_in;
-        if (ft_operations_normed(&operation_in, tab) == 0)
+        if (!ft_check_numbers(av))
             return (0);
-        while (tmp2 != NULL)
-        {
-            printf("[%s]--[%d]\n", tmp2->operation, tmp2->index);
-            tmp2 = tmp2->next;
-        }
-        ft_apply_operations(operation_in, &head, &head2);
-        if (ft_stack_is_sorted(head) == 1)
-            printf("OK");
+        astack = ft_new_stack(av);
+        bstack = ft_new_stack(av);
+        if (!ft_operations_normed(&astack, &bstack))
+             return (0);
+        if (ft_stack_is_sorted(astack))
+            printf("OK\n");
         else
-            printf("KO");
+            printf("KO\n");
     }
-    else
-        write(1, "\n", 1);
+    ft_free_stack(&astack);
+    ft_free_stack(&bstack);
     return (0);
 }

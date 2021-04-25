@@ -1,23 +1,54 @@
 #include "../includes/operations.h"
 
+int ft_isduplicate(char **av, char *number)
+{
+    int i;
+    int found;
 
+    i = 1;
+    found = 0;
+    while (av[i] != NULL)
+    {
+        if (ft_is_equal_str(av[i], number))
+        {
+            found++;
+        }
+        i++;
+    }
+    if (found == 2)
+        return (1);
+    else
+        return (0);
+}
 
-t_stack *ft_new_stack(int nelements, char **av)
+t_stack *ft_new_stack(char **av)
 {
 	t_stack *astack;
 	int  i;
 
 	astack = NULL;
-	if (nelements != 0)
+	i = 1;
+	while (av[i] != NULL)
 	{
-		i = 1;
-		while (av[i] != NULL)
-    	{
-        	ft_lstadd_back_number(&astack, ft_new_number(ft_atoi(av[i])));
-        	i++;
-    	}
+    	ft_lstadd_back_number(&astack, ft_new_number(ft_atoi(av[i])));
+    	i++;
 	}
 	return (astack);
+}
+
+void    ft_free_stack(t_stack **stack)
+{
+    t_stack *tmp;
+
+    if (*stack)
+    {
+        while (*stack)
+        {
+            tmp = *stack;
+            *stack = tmp->next;
+            free(tmp);
+        }
+    }
 }
 		
 // }
@@ -100,7 +131,7 @@ void	ft_lstadd_back_operation(t_operations **alst, t_operations *new)
 		tmp = tmp->next;
 	tmp->next = new;
 }
-int			ft_get_len_env(t_stack *astack)
+int			ft_get_len_stack(t_stack *astack)
 {
     t_stack *tmp;
     int     len;
