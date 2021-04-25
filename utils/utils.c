@@ -174,3 +174,30 @@ int ft_tablen(char **pointer_tab)
     }
     return (i);
 }
+
+int        ft_check_numbers(char **av)
+{
+    int i;
+
+    i = 1;
+    while(av[i] != NULL)
+    {
+        if (!ft_isint(av[i]) || ft_isduplicate(av, av[i]))
+        {
+            ft_putendl_fd("Error", 1);
+            return (0);
+        }
+        i++;
+    }
+    return (1);
+}
+
+void        ft_print_stack(t_stack *stack)
+{
+    while (stack)
+    {
+        ft_putnbr_fd(stack->number, 1);
+        write(1, "\n", 1);
+        stack = stack->next;
+    }
+}
