@@ -37,6 +37,4 @@ void                    ft_rra(t_stack **astack);
 void                    ft_rrb(t_stack **bstack);
 void                    ft_rrr(t_stack **astack, t_stack **bstack);
 
-//// check function param's order stack is not afected
-
 # endif
