@@ -18,7 +18,7 @@ int    ft_pop(t_stack **stack)
     int number;
     t_stack *tmp;
     if (*stack == NULL)
-        return ;
+        return -1;
     tmp = *stack;
     number = tmp->number;
     *stack = tmp->next;
@@ -179,7 +179,7 @@ int         ft_stack_is_sorted(t_stack *head)
     t_stack *tmp;
 
     tmp = head;
-    if (ft_get_len_env(head) < 2)
+    if (ft_get_len_stack(head) < 2)
         return (1);
     while (head->next != NULL)
     {

@@ -3,6 +3,8 @@
 # include "../libft/libft.h"
 # include "utils.h"
 
+int                     ft_check_numbers(char **av);
+void                    ft_print_stack(t_stack *stack);
 int                     ft_push(t_stack **stack, int number);
 int                     ft_pop(t_stack **stack);
 void                    ft_apply_operation(char *line, t_stack **astack, t_stack **bstack);
