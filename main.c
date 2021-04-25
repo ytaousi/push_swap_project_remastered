@@ -14,5 +14,6 @@ int main()
     ft_pop(&astack);
     ft_print_stack(astack);
     write(1, "-\n", 2);
+    printf("[%d]\n", ft_peek(astack));
     return (0);
 }

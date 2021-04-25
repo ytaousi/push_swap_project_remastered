@@ -1,31 +1,5 @@
 #include "../includes/operations.h"
 
-int     ft_push(t_stack **stack, int number)
-{
-    t_stack *new;
-
-    new = malloc(sizeof(t_stack));
-    if (!new)
-        return -1;
-    new->number = number;
-    new->next = *stack;
-    *stack = new;
-    return (1);
-}
-
-int    ft_pop(t_stack **stack)
-{
-    int number;
-    t_stack *tmp;
-    if (*stack == NULL)
-        return -1;
-    tmp = *stack;
-    number = tmp->number;
-    *stack = tmp->next;
-    free(tmp);
-    return (number);
-}
-
 void    ft_sa(t_stack **astack)
 {
     int tmp;
@@ -174,23 +148,6 @@ void        ft_rrr(t_stack **astack, t_stack **bstack)
     ft_rrb(bstack);
 }
 
-int         ft_stack_is_sorted(t_stack *head)
-{
-    t_stack *tmp;
-
-    tmp = head;
-    if (ft_get_len_stack(head) < 2)
-        return (1);
-    while (head->next != NULL)
-    {
-        head = head->next;
-        if(tmp->number > head->number)
-            return (0);
-        tmp = tmp->next;
-    }
-    return (1);
-}
-
 int        ft_operation_found(char *operation)
 {
     char **operations;
@@ -232,67 +189,56 @@ void        ft_apply_operation(char *operation, t_stack **astack, t_stack **bsta
     {
         printf("sa\n");
 		//ft_sa(astack);
-        //swap_first2(a);
     }
     if (ft_is_equal_str(operation, "sb"))
 	{
     	printf("sb\n");
         //ft_sb(bstack);
-        //swap_first2(b);
     }
     if (ft_is_equal_str(operation, "ss"))
 	{
     	printf("ss\n");
         //ft_ss(astack, bstack);
-        //swap_a_and_b(a, b);
     }
     if (ft_is_equal_str(operation, "pa"))
 	{
     	printf("pa\n");
         //ft_pa(astack);
-        //from_a2b(b, a);
     }
     if (ft_is_equal_str(operation, "pb"))
 	{
     	printf("pb\n");
         //ft_pb(bstack);
-        //from_a2b(a, b);
     }
     if (ft_is_equal_str(operation, "ra"))
 	{
     	printf("ra\n");
         //ft_ra(astack);
-        //rotate_stack_up(a);
     }
     if (ft_is_equal_str(operation, "rb"))
 	{
     	printf("rb\n");
         //ft_rb(bstack);
-        //rotate_stack_up(b);
     }
     if (ft_is_equal_str(operation, "rr"))
 	{
     	printf("rr\n");
         //ft_rr(astack, bstack);
-        //rotate_up_ab(a, b);
     }
     if (ft_is_equal_str(operation, "rra"))
 	{
     	printf("rra\n");
         //ft_rra(astack);
-        //rotate_stack_down(a);
     }
     if (ft_is_equal_str(operation, "rrb"))
 	{
     	printf("rrb\n");
         //ft_rrb(bstack);
-        //rotate_stack_down(b);
     }
     if (ft_is_equal_str(operation, "rrr"))
 	{
     	printf("rrr\n");
         //ft_rrr(astack, bstack);
-        //rotate_down_ab(a, b);
     }
 }
 

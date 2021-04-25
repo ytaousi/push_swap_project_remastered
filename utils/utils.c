@@ -20,36 +20,6 @@ int ft_isduplicate(char **av, char *number)
     else
         return (0);
 }
-
-t_stack *ft_new_stack(char **av)
-{
-	t_stack *astack;
-	int  i;
-
-	astack = NULL;
-	i = 1;
-	while (av[i] != NULL)
-	{
-    	ft_lstadd_back_number(&astack, ft_new_number(ft_atoi(av[i])));
-    	i++;
-	}
-	return (astack);
-}
-
-void    ft_free_stack(t_stack **stack)
-{
-    t_stack *tmp;
-
-    if (*stack)
-    {
-        while (*stack)
-        {
-            tmp = *stack;
-            *stack = tmp->next;
-            free(tmp);
-        }
-    }
-}
 		
 // }
 ////////////////////////////////////// Remastered Code above ///////////////////////

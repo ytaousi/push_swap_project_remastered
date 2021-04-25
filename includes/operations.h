@@ -5,12 +5,9 @@
 
 int                     ft_check_numbers(char **av);
 void                    ft_print_stack(t_stack *stack);
-int                     ft_push(t_stack **stack, int number);
-int                     ft_pop(t_stack **stack);
 void                    ft_apply_operation(char *line, t_stack **astack, t_stack **bstack);
 int                     ft_isduplicate(char **av, char *number);
-t_stack                 *ft_new_stack(char **av);
-void                    ft_free_stack(t_stack **stack);
+
 int                     ft_tablen(char **pointer_tab);
 ///////////////////////////////////////////// Remastered code above ///////////////////////
 int                     ft_isint(char *av);
@@ -18,11 +15,20 @@ t_stack                 *ft_new_number(int number);
 t_operations	        *ft_new_operation(char *operation);
 void	                ft_lstadd_back_number(t_stack **alst, t_stack *new);
 void	                ft_lstadd_back_operation(t_operations **alst, t_operations *new);
-int			            ft_get_len_stack(t_stack *astack);
-int                     ft_stack_is_sorted(t_stack *head);
 int                     ft_operations_normed(t_stack **astack, t_stack **bstack);
 int                     ft_is_equal_str(char *s1, char *s2);
 int                     ft_get_maximum_value(int a, int b);
+
+// Stack Operations
+int                     ft_push(t_stack **stack, int number);
+int                     ft_pop(t_stack **stack);
+int                     ft_peek(t_stack *stack);
+t_stack                 *ft_new_stack(char **av);
+void                    ft_free_stack(t_stack **stack);
+int			            ft_get_len_stack(t_stack *astack);
+int                     ft_stack_is_sorted(t_stack *head);
+
+
 
 // Operations
 void                    ft_sa(t_stack **astack);
